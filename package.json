@@ -1,19 +1,19 @@
 {
   "name": "reformat",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Reformat javascript objects declaratively",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodeunit test"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/runningskull/reformat.git"
+    "url": "git://github.com/runningskull/node-reformat.git"
   },
   "author": "Juan Patten (jr@juanpatten.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/runningskull/reformat/issues"
+    "url": "https://github.com/runningskull/node-reformat/issues"
   },
   "dependencies": {
     "extend": "~1.2.1",
