@@ -14,5 +14,12 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/runningskull/reformat/issues"
+  },
+  "dependencies": {
+    "extend": "~1.2.1",
+    "traverse": "~0.6.6"
+  },
+  "devDependencies": {
+    "nodeunit": "~0.8.1"
   }
 }
