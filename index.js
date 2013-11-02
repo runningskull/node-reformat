@@ -4,6 +4,8 @@ var traverse = require('traverse')
 
 
 function reformat(format, include, input) {
+  if (! input) (input=include), (include=null);
+
   var tformat = traverse(format)
     , tinput = traverse(input)
 
