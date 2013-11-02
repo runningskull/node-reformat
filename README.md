@@ -3,6 +3,15 @@ reformat
 
 Reformat javascript objects easily
 
+```bash
+npm install reformat
+```
+
+```javascript
+var reformat = require('reformat')
+```
+
+
 ### reformat(format, include, input)
 
 - `format`: the final output you want. looks like
