@@ -20,7 +20,8 @@ var reformat = require('reformat')
 {
   flattened_field:'some.deeply.nested.field',
   first_in_array:'arr.0',
-  nested_obj: {nested:'top_level_key', things:'other_key.things'}
+  nested_obj: {nested:'top_level_key', things:'other_key.things'},
+  transformed: ['wacky.field', function(x){ return x.toLowerCase() }]
 }
 ```
 
@@ -43,6 +44,7 @@ var reformat = require('reformat')
     arr: ['thing1', 'thing2'],
     top_level_key: 'wat am i doing!?',
     other_key: {things: 'urrday'}
+    wacky: {field: 'ThIs Is SoMe WiErD sTuFf'}
 }
 ```
 
@@ -54,6 +56,7 @@ var reformat = require('reformat')
   first_in_array: 'thing1',
   nested_obj: {nested:'wat am i doing!?', things:'urrday'},
   bring_along: ['this', 'field']
+  transformed: 'this is some wierd stuff'
 }
 ```
 
