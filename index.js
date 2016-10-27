@@ -1,30 +1,38 @@
 var traverse = require('traverse')
+  , selectn = require('selectn')
   , extend = require('extend')
-  , util = require('util')
 
+function is_string(x) {
+  return (
+    (typeof x == 'string') ||
+    (x instanceof String)
+  )
+}
 
-function reformat(format, include, input) {
-  if (! input) (input=include), (include=null);
+function convert(path, fn) {
+  var cpath = new String(path)
+  cpath.convert = fn
+  return cpath
+}
 
-  var tformat = traverse(format)
-    , tinput = traverse(input)
+function reformat(output, input) {
+  // Return curried version if no second param
+  if (! input) {
+    return reformat.bind(null, output)
+  }
 
-  var tmapped = tformat.map(function(path) {
-    // Arrays aren't to be walked, since we use them for defining
-    // transformation functions
-    if (this.parent && util.isArray(this.parent.node))
-      return;
+  var travout = traverse(output)
+    , travin = traverse(input)
 
-    if (typeof path == 'string')
-      return tinput.get(path.split('.'));
-
-    if (util.isArray(path))
-      return path[1](tinput.get(path[0].split('.')));
+  return travout.map(function(path) {
+    if (is_string(path)) {
+      var val = travin.get(path.split('.'))
+      return path.convert ? path.convert(val) : val
+    }
   })
-
-  return include ? extend(tmapped, include) : tmapped
 }
 
 
 module.exports = reformat
+module.exports.convert = convert
 

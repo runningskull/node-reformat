@@ -11,55 +11,69 @@ npm install reformat
 var reformat = require('reformat')
 ```
 
+## Usage
 
-### reformat(format, include, input)
-
-- `format`: the final output you want. looks like
-
-```javascript
-{
-  flattened_field:'some.deeply.nested.field',
-  first_in_array:'arr.0',
-  nested_obj: {nested:'top_level_key', things:'other_key.things'},
-  transformed: ['wacky.field', function(x){ return x.toLowerCase() }]
-}
-```
-
-
-- `include`: optional. extra fields to include w/ final output:
+Let's say you have some data that looks like this:
 
 ```javascript
-{
-  bring_along: ['this', 'field']
-}
-```
-
-
-- `input`: the data to be reformatted
-
-```javascript
-// for instance
 {
     some: {deeply: {nested: {field: 'FOOBAR'}}},
     arr: ['thing1', 'thing2'],
-    top_level_key: 'wat am i doing!?',
-    other_key: {things: 'urrday'}
+    top_level_key: 'toplev',
+    other_key: {things: ['every', 'day']},
+    prices: {foo:111, bar:222},
     wacky: {field: 'ThIs Is SoMe WiErD sTuFf'}
 }
 ```
 
-### Example output:
+and you want data that looks like this:
 
 ```javascript
 {
   flattened_field: 'FOOBAR',
   first_in_array: 'thing1',
-  nested_obj: {nested:'wat am i doing!?', things:'urrday'},
-  bring_along: ['this', 'field']
-  transformed: 'this is some wierd stuff'
+  nested_obj: {
+    nested: 'toplev', 
+    fields: 'day'
+  },
+  prices: [111, 222],
+  munged_field: 'this is some wierd stuff'
 }
 ```
 
 
-## TODO:
-- better tests, better docs, (?)aggregation
+### reformat(output, input)
+
+#### `output`: the final output structure you want
+
+Should be an object whose keys are either `"dot.separated.paths"`,
+or further nested structures.
+
+```javascript
+{
+  flattened_field: 'some.deeply.nested.field',
+  first_in_array: 'arr.0',
+  nested_obj: {
+    nested: 'top_level_key', 
+    fields: 'other_key.things.1'
+  },
+  arr: ['prices.foo', 'prices.bar']
+}
+```
+
+If one of your fields needs some additional conversion, you can
+use the [`reformat.convert(path, fn)`](https://github.com/runningskull/node-reformat/blob/master/index.js#L12) function like this:
+
+```javascript
+{
+  munged_field: reformat.convert('wacky.field', (x) => x.toLowerCase())
+}
+```
+
+#### `input`: the data to be reformatted
+
+-----
+
+### TODO:
+- better docs
+- more thorough tests
