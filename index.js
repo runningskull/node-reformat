@@ -1,6 +1,5 @@
 var traverse = require('traverse')
   , selectn = require('selectn')
-  , extend = require('extend')
 
 function is_string(x) {
   return (
